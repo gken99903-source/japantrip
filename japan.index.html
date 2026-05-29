@@ -1,0 +1,145 @@
+<!DOCTYPE HTML>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>富士山與東京八日詳細行程全紀錄</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #fdf6e3 !important; color: #5d4037 !important; font-family: 'Noto Sans TC', sans-serif; }
+        .card { background: #fffcf5 !important; border: 2px solid #d7ccc8; border-radius: 1rem; }
+        .tab-button { color: #8d7b6b; }
+        .tab-button.active { border-bottom: 3px solid #d84315; color: #d84315; }
+        .content-panel { display: none; }
+        .content-panel.active { display: block; }
+        .photo-cell { background: #eaddcf; border: 1px dashed #c5b3a2; display: flex; align-items: center; justify-content: center; color: #8d7b6b; border-radius: 0.5rem; overflow: hidden; cursor: pointer; transition: transform 0.2s; }
+        .photo-cell:hover { transform: scale(1.03); }
+        /* 放大視窗樣式 */
+        #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center; }
+        /* 底部按鈕樣式 */
+        .credit-badge { transition: all 0.3s ease; border: 2px solid #d84315; color: #d84315; }
+        .credit-badge:hover { background-color: #d84315; color: white; transform: scale(1.05); }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="max-w-5xl mx-auto">
+        <div class="flex space-x-8 mb-8 justify-center border-b border-stone-300 pb-4">
+            <button class="tab-button pb-2 font-bold text-xl active" onclick="showTab('journal', this)">📖 詳細行程</button>
+            <button class="tab-button pb-2 font-bold text-xl" onclick="showTab('album', this)">📸 每日精彩回憶</button>
+        </div>
+
+        <div id="journal" class="content-panel card p-8 shadow-xl space-y-8 active">
+            <h1 class="text-3xl font-bold text-center mb-6">富士山 & 東京 八日旅程細節回顧</h1>
+            <div id="itinerary-details" class="text-stone-800 leading-relaxed"></div>
+        </div>
+
+        <div id="album" class="content-panel card p-8 shadow-xl">
+            <h1 class="text-3xl font-bold text-center mb-8">📸 每日精彩回憶 </h1>
+            <div id="album-grid" class="space-y-12"></div>
+        </div>
+
+        <!-- 修正後的頁尾 -->
+<div class="text-center mt-12 pb-12">
+            <a href="https://www.instagram.com/_2010_yi?igsh=MWFuNzBxODJ5NWNxZA%3D%3D&utm_source=qr" 
+               target="_blank" 
+               class="credit-badge inline-block px-6 py-2 rounded-full font-bold">
+                Follow @GUAN on Instagram
+            </a>
+        </div>
+    </div>
+
+    <!-- 放大視窗 -->
+    <div id="modal" onclick="closeModal()">
+        <img id="modal-img" src="" class="max-w-[90%] max-h-[90%] object-contain rounded-lg shadow-2xl">
+    </div>
+
+    <script>
+        const tripData = [
+            { day: "Day 1", title: "初見富士", desc: "羽田機場接機，搭乘專屬包車前往河口湖。傍晚抵達東橫INN辦理入住後，前往河口湖大橋欣賞夕陽下的富士山，晚餐前往 <a href='https://maps.app.goo.gl/m8ijqguksjKF8zYd6' target='_blank' class='underline text-blue-700'>和食処ふじさき亭</a> 享用在地料理。" },
+            { day: "Day 2", title: "富士吉田漫步", desc: "展開單車之旅。前往新倉山淺間公園俯瞰市景，參訪冨士山下宮小室浅間神社，打卡熱門的日川時計店，參拜金鳥居。午餐於富士山站商場內，晚餐前往 <a href='https://maps.app.goo.gl/KpvzT3oZTxEptB698' target='_blank' class='underline text-blue-700'>38KAWAGUCHIKO</a>。" },
+            { day: "Day 3", title: "湖畔藝術時光", desc: "造訪冨士御室浅間神社本宮，在大石公園感受湖水與花海，於餐廳 <a href='https://maps.app.goo.gl/SpxqvRyv9AUWwdgLA' target='_blank' class='underline text-blue-700'>みずの风 MIZUNOKAZE</a> 用餐，下午前往音樂森林美術館，最後於 <a href='https://maps.app.goo.gl/eDDaV9bG7BKQKdpz9' target='_blank' class='underline text-blue-700'>APPLE PIE lab</a> 享用蘋果派。" },
+            { day: "Day 4", title: "湖光泉色與靈氣", desc: "前往新屋山神社祈求財運，參訪紅富士の湯，晚間再次前往 <a href='https://maps.app.goo.gl/m8ijqguksjKF8zYd6' target='_blank' class='underline text-blue-700'>和食処ふじさき亭</a>。" },
+            { day: "Day 5", title: "移動至東京", desc: "搭乘高速巴士前往東京，入住 <a href='https://maps.app.goo.gl/w71dNNZo9iajFv5x8' target='_blank' class='underline text-blue-700'>品川王子大飯店</a>。" },
+            { day: "Day 6", title: "奇幻魔法之旅", desc: "全天專注於東京華納兄弟哈利波特影城。" },
+            { day: "Day 7", title: "時尚與科技共舞", desc: "前往麻布台之丘、teamLab Borderless 及淺草寺。" },
+            { day: "Day 8", title: "滿載而歸", desc: "採購後前往羽田機場搭機返家。" }
+        ];
+
+        const dayPhotos = {
+            "Day 1": [
+                "https://github.com/gken99903-source/japantrip/blob/main/IMG_9682.jpg?raw=true",
+                "https://github.com/gken99903-source/japantrip/blob/main/IMG_9703.jpg?raw=true",
+                "https://github.com/gken99903-source/japantrip/blob/main/IMG_9707.jpg?raw=true",
+                "https://github.com/gken99903-source/japantrip/blob/main/IMG_9720.jpg?raw=true",
+                "https://github.com/gken99903-source/japantrip/blob/main/IMG_9736.jpg?raw=true",
+                "https://github.com/gken99903-source/japantrip/blob/main/IMG_9731.jpg?raw=true",
+                "https://github.com/gken99903-source/japantrip/blob/main/IMG_9735.jpg?raw=true",
+                "https://github.com/gken99903-source/japantrip/blob/main/IMG_9743.jpg?raw=true",
+                "https://github.com/gken99903-source/japantrip/blob/main/S__17694729_0.jpg?raw=true",
+                "https://github.com/gken99903-source/japantrip/blob/main/S__17694736_0.jpg?raw=true",
+                "https://github.com/gken99903-source/japantrip/blob/main/S__17694740_0.jpg?raw=true",
+                "https://github.com/gken99903-source/japantrip/blob/main/S__17694744_0.jpg?raw=true"
+],
+    "Day 2": [
+               "https://github.com/gken99903-source/japantrip/blob/main/S__17694751_0.jpg?raw=true",
+                "https://raw.githubusercontent.com/gken99903-source/japantrip/refs/heads/main/S__17694754_0.jpg",
+                "https://raw.githubusercontent.com/gken99903-source/japantrip/refs/heads/main/S__17694757_0.jpg",
+                "https://raw.githubusercontent.com/gken99903-source/japantrip/refs/heads/main/S__17694758_0.jpg",
+                "https://raw.githubusercontent.com/gken99903-source/japantrip/refs/heads/main/S__17694765_0.jpg",
+                "https://raw.githubusercontent.com/gken99903-source/japantrip/refs/heads/main/S__17694766_0.jpg",
+                "https://raw.githubusercontent.com/gken99903-source/japantrip/refs/heads/main/S__17694767_0.jpg",
+                "https://raw.githubusercontent.com/gken99903-source/japantrip/refs/heads/main/S__17694771_0.jpg",
+                "https://raw.githubusercontent.com/gken99903-source/japantrip/refs/heads/main/S__17694774_0.jpg",
+                "https://raw.githubusercontent.com/gken99903-source/japantrip/refs/heads/main/S__17694752_0.jpg",
+                "https://raw.githubusercontent.com/gken99903-source/japantrip/refs/heads/main/S__17694753_0.jpg",
+                "https://raw.githubusercontent.com/gken99903-source/japantrip/refs/heads/main/S__17694755_0.jpg",
+                "https://raw.githubusercontent.com/gken99903-source/japantrip/refs/heads/main/S__17694756_0.jpg",
+                "https://raw.githubusercontent.com/gken99903-source/japantrip/refs/heads/main/S__17694759_0.jpg",
+                "https://raw.githubusercontent.com/gken99903-source/japantrip/refs/heads/main/S__17694760_0.jpg"
+],
+    "Day 3": [
+               "https://github.com/gken99903-source/japantrip/blob/main/S__17694762_0.jpg?raw=true",
+                "https://github.com/gken99903-source/japantrip/blob/main/S__17694763_0.jpg?raw=true",
+                "https://github.com/gken99903-source/japantrip/blob/main/S__17694768_0.jpg?raw=true",
+                "https://github.com/gken99903-source/japantrip/blob/main/S__17694769_0.jpg?raw=true",
+                "https://github.com/gken99903-source/japantrip/blob/main/S__17694770_0.jpg?raw=true",
+                "https://github.com/gken99903-source/japantrip/blob/main/S__17694773_0.jpg?raw=true",
+                "https://github.com/gken99903-source/japantrip/blob/main/S__17694781_0.jpg?raw=true"
+]
+        };
+
+        const journal = document.getElementById('itinerary-details');
+        tripData.forEach(d => {
+            journal.innerHTML += `<div class="mb-6 border-l-4 border-orange-400 pl-4"><h3 class="font-bold text-xl text-orange-900">${d.day}: ${d.title}</h3><p>${d.desc}</p></div>`;
+        });
+
+        const album = document.getElementById('album-grid');
+        tripData.forEach(d => {
+            if (dayPhotos[d.day]) {
+                album.innerHTML += `<div>
+                    <h3 class="font-bold text-lg mb-4 text-orange-800 underline">${d.day} 回憶錄</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-5 gap-4">
+                        ${dayPhotos[d.day].map(url => `<img src="${url}" class="photo-cell w-full h-32 object-cover" loading="lazy" onclick="openModal('${url}')">`).join('')}
+                    </div>
+                </div>`;
+            }
+        });
+
+        function showTab(tabId, btn) {
+            document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        function openModal(url) {
+            document.getElementById('modal').style.display = 'flex';
+            document.getElementById('modal-img').src = url;
+        }
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
