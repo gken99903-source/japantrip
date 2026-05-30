@@ -57,13 +57,18 @@
     <script>
         const tripData = [
             { day: "Day 1", title: "初見富士", desc: "羽田機場接機，搭乘專屬包車前往河口湖。傍晚抵達東橫INN辦理入住後，前往河口湖大橋欣賞夕陽下的富士山，晚餐前往 <a href='https://maps.app.goo.gl/m8ijqguksjKF8zYd6' target='_blank' class='underline text-blue-700'>和食処ふじさき亭</a> 享用在地料理。" },
-            { day: "Day 2", title: "富士吉田漫步", desc: "展開單車之旅。前往新倉山淺間公園俯瞰市景，參訪冨士山下宮小室浅間神社，打卡熱門的日川時計店，參拜金鳥居。午餐於富士山站商場內，晚餐前往 <a href='https://maps.app.goo.gl/KpvzT3oZTxEptB698' target='_blank' class='underline text-blue-700'>38KAWAGUCHIKO</a>。" },
+            { day: "Day 2", title: "富士吉田漫步", desc: "展開單車之旅。前往新倉山淺間公園俯瞰市景，參訪冨士山下宮小室浅間神社，打卡熱門的日川時計店，參拜金鳥居。午餐於富士山站商場內，下午前往montbell購物，晚餐前往 <a href='https://maps.app.goo.gl/KpvzT3oZTxEptB698' target='_blank' class='underline text-blue-700'>38KAWAGUCHIKO</a>。" },
             { day: "Day 3", title: "湖畔藝術時光", desc: "造訪冨士御室浅間神社本宮，在大石公園感受湖水與花海，於餐廳 <a href='https://maps.app.goo.gl/SpxqvRyv9AUWwdgLA' target='_blank' class='underline text-blue-700'>みずの风 MIZUNOKAZE</a> 用餐，下午前往音樂森林美術館，最後於 <a href='https://maps.app.goo.gl/eDDaV9bG7BKQKdpz9' target='_blank' class='underline text-blue-700'>APPLE PIE lab</a> 享用蘋果派。" },
-            { day: "Day 4", title: "湖光泉色與靈氣", desc: "前往新屋山神社祈求財運，參訪紅富士の湯，晚間再次前往 <a href='https://maps.app.goo.gl/m8ijqguksjKF8zYd6' target='_blank' class='underline text-blue-700'>和食処ふじさき亭</a>。" },
-            { day: "Day 5", title: "移動至東京", desc: "搭乘高速巴士前往東京，入住 <a href='https://maps.app.goo.gl/w71dNNZo9iajFv5x8' target='_blank' class='underline text-blue-700'>品川王子大飯店</a>。" },
-            { day: "Day 6", title: "奇幻魔法之旅", desc: "全天專注於東京華納兄弟哈利波特影城。" },
-            { day: "Day 7", title: "時尚與科技共舞", desc: "前往麻布台之丘、teamLab Borderless 及淺草寺。" },
-            { day: "Day 8", title: "滿載而歸", desc: "採購後前往羽田機場搭機返家。" }
+            { 
+    day: "Day 4", 
+    title: "湖光泉色與靈氣", 
+    desc: "前往新屋山神社祈求財運，中午前往 <a href='https://www.google.com/maps/search/?api=1&query=紅富士の湯' target='_blank' class='underline text-blue-700'>紅富士の湯</a> 泡湯，晚間再次前往 <a href='https://www.google.com/maps/search/?api=1&query=和食処ふじさき亭' target='_blank' class='underline text-blue-700'>和食処ふじさき亭</a> 用餐。" 
+},
+            { day: "Day 5", title: "移動至東京", desc: "搭乘高速巴士前往東京，入住 <a href='https://maps.app.goo.gl/w71dNNZo9iajFv5x8' target='_blank' class='underline text-blue-700'>品川王子大飯店</a> 後於對面品川車站用餐、購物。" },
+            { day: "Day 6", title: "奇幻魔法之旅", desc: "早上和中午專注於 <a href='https://maps.app.goo.gl/kBh7ESEbdaUfDskJ6' target='_blank' class='underline text-blue-700'>東京華納兄弟哈利波特影城</a> 下午前往東京車站一番街逛逛、購物。"},
+            
+            { day: "Day 7", title: "時尚與科技共舞", desc: "前往麻布台之丘俯瞰東京、在 <a href='https://maps.app.goo.gl/B6ZtrEWBof5tV1616' target='_blank' class='underline text-blue-700'>teamLab Borderless</a> 欣賞科技美術，傍晚淺草寺，晚餐前往享用鰻魚蓋飯。" },
+            { day: "Day 8", title: "滿載而歸", desc: "前往羽田機場，於機場內免稅店最後購物後搭機返家。" }
         ];
 
         const dayPhotos = {
