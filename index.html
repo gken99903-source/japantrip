@@ -14,9 +14,7 @@
         .content-panel.active { display: block; }
         .photo-cell { background: #eaddcf; border: 1px dashed #c5b3a2; display: flex; align-items: center; justify-content: center; color: #8d7b6b; border-radius: 0.5rem; overflow: hidden; cursor: pointer; transition: transform 0.2s; }
         .photo-cell:hover { transform: scale(1.03); }
-        /* 放大視窗樣式 */
         #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center; }
-        /* 底部按鈕樣式 */
         .credit-badge { transition: all 0.3s ease; border: 2px solid #d84315; color: #d84315; }
         .credit-badge:hover { background-color: #d84315; color: white; transform: scale(1.05); }
     </style>
@@ -39,23 +37,25 @@
             <div id="album-grid" class="space-y-12"></div>
         </div>
 
-        <!-- 修正後的頁尾 -->
-<div class="text-center mt-12 pb-12">
+        <div class="text-center mt-8 text-stone-500 text-sm">
+            最後更新於：<span id="last-modified"></span>
+        </div>
+
+        <div class="text-center mt-12 pb-12">
             <a href="https://www.instagram.com/_2010_yi?igsh=MWFuNzBxODJ5NWNxZA%3D%3D&utm_source=qr" 
                target="_blank" 
                class="credit-badge inline-block px-6 py-2 rounded-full font-bold">
-                Follow @GUAN on Instagram
+               Follow @GUAN on Instagram
             </a>
         </div>
     </div>
 
-    <!-- 放大視窗 -->
     <div id="modal" onclick="closeModal()">
         <img id="modal-img" src="" class="max-w-[90%] max-h-[90%] object-contain rounded-lg shadow-2xl">
     </div>
 
     <script>
-        // 設定最後更新時間
+        // 自動顯示最後更新時間的邏輯
         window.onload = function() {
             const date = new Date(document.lastModified);
             const formattedDate = date.getFullYear() + '/' + 
