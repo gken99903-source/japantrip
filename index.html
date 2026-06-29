@@ -55,6 +55,14 @@
     </div>
 
     <script>
+        // 設定最後更新時間
+        window.onload = function() {
+            const date = new Date(document.lastModified);
+            const formattedDate = date.getFullYear() + '/' + 
+                                  (date.getMonth() + 1) + '/' + 
+                                  date.getDate();
+            document.getElementById('last-modified').textContent = formattedDate;
+        };
         const tripData = [
             { day: "Day 1", title: "初見富士", desc: "羽田機場接機，搭乘專屬包車前往河口湖。傍晚抵達東橫INN辦理入住後，前往河口湖大橋欣賞夕陽下的富士山，晚餐前往 <a href='https://maps.app.goo.gl/m8ijqguksjKF8zYd6' target='_blank' class='underline text-blue-700'>和食処ふじさき亭</a> 享用在地料理。" },
             { day: "Day 2", title: "富士吉田漫步", desc: "展開單車之旅。前往新倉山淺間公園俯瞰市景，參訪冨士山下宮小室浅間神社，打卡熱門的日川時計店，參拜金鳥居。午餐於富士山站商場內，下午前往montbell購物，晚餐前往 <a href='https://maps.app.goo.gl/KpvzT3oZTxEptB698' target='_blank' class='underline text-blue-700'>38KAWAGUCHIKO</a>。" },
